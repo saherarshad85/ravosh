@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#21151b">
+  <meta name="description" content="RAVOSH — Where style meets simplicity. Discover luxury dresses, evening wear and modern essentials.">
+  <title>RAVOSH — Where Style Meets Simplicity</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    /* === GLOBAL RESET & VARIABLES === */
+    :root {
+      --bg: #f8f2ed;
+      --paper: #fffaf6;
+      --ink: #281b20;
+      --wine: #74364d;
+      --rose: #c98791;
+      --gold: #c9ad78;
+      --muted: #88777a;
+      --line: #e8dcd6;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --transition: 0.35s cubic-bezier(0.2, 0.75, 0.2, 1);
+      --shadow: 0 18px 40px -12px rgba(40, 27, 32, 0.18);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      transition: background 0.4s;
+    }
+    body.lock { overflow: hidden; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: #d9aeb2; color: #281b20; }
+    /* === UTILITY === */
+    .hidden { display: none !important; }
+    .page { display: none; min-height: 100vh; flex-direction: column; }
+    .page.active { display: flex; }
+    /* === HEADER / NAV === */
+    header {
+      height: 82px; padding: 0 5.5%; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50; background: #f8f2edeF; backdrop-filter: blur(18px);
+      border-bottom: 1px solid #6b41420e; transition: background 0.3s;
+    }
+    .brand { display: flex; align-items: center; gap: 9px; }
+    .brand img { width: 62px; height: 60px; object-fit: contain; mix-blend-mode: multiply; }
+    .brand-name { font: 500 23px var(--serif); letter-spacing: 6px; color: var(--wine); }
+    .brand-tag { display: block; font-size: 6px; letter-spacing: 1.5px; color: #8c7b6c; margin-top: 4px; }
+    .nav { display: flex; gap: 29px; align-items: center; }
+    .nav a { font-size: 9px; letter-spacing: 1.7px; text-transform: uppercase; position: relative; padding: 10px 0; }
+    .nav a:after { content: ""; position: absolute; bottom: 3px; left: 0; width: 0; height: 1px; background: var(--wine); transition: 0.3s; }
+    .nav a:hover:after, .nav a.active:after { width: 100%; }
+    .actions { display: flex; gap: 8px; align-items: center; }
+    .icon { border: 0; background: transparent; font-size: 20px; color: var(--ink); padding: 8px; position: relative; }
+    .count { position: absolute; top: 1px; right: 0; border-radius: 50%; background: var(--wine); color: white; width: 15px; height: 15px; font-size: 9px; display: grid; place-items: center; }
+    .menu-btn { display: none; }
+    /* === INTRO (3D LOGO) === */
+    #intro {
+      position: fixed; inset: 0; z-index: 200; background: radial-gradient(circle at 50% 45%, #50303c, #1b1218 65%);
+      display: grid; place-items: center; color: #f8eee8; transition: opacity 0.9s, visibility 0.9s;
+      perspective: 1200px;
+    }
+    #intro.done { opacity: 0; visibility: hidden; }
+    .intro-inner { text-align: center; animation: introRise 1.4s both; transform-style: preserve-3d; }
+    .intro-logo-wrap {
+      width: 175px; height: 145px; margin: 0 auto 8px;
+      perspective: 800px; transform-style: preserve-3d;
+    }
+    .intro-logo {
+      width: 100%; height: 100%; object-fit: contain;
+      filter: drop-shadow(0 0 25px #d8b97855);
+      animation: logo3D 6s ease-in-out infinite;
+      transform-style: preserve-3d;
+      backface-visibility: visible;
+    }
+    @keyframes logo3D {
+      0%   { transform: rotateY(0deg) rotateX(0deg) translateZ(0); }
+      25%  { transform: rotateY(18deg) rotateX(-6deg) translateZ(18px); }
+      50%  { transform: rotateY(0deg) rotateX(0deg) translateZ(0); }
+      75%  { transform: rotateY(-18deg) rotateX(6deg) translateZ(18px); }
+      100% { transform: rotateY(0deg) rotateX(0deg) translateZ(0); }
+    }
+    .intro-name { font: 400 43px var(--serif); letter-spacing: 12px; margin: 3px 0 5px; }
+    .intro-tag { font-size: 9px; letter-spacing: 4px; color: #d7c5a4; }
+    .loader { width: 180px; height: 1px; background: #ffffff25; margin: 28px auto 10px; overflow: hidden; }
+    .loader i { display: block; width: 0; height: 100%; background: var(--gold); animation: load 1.7s ease forwards; }
+    .load-num { font-size: 9px; letter-spacing: 2px; color: #c9b7b4; }
+    @keyframes load { to { width: 100%; } }
+    @keyframes introRise { from { opacity: 0; transform: translateY(25px) scale(0.97); } to { opacity: 1; transform: none; } }
+    /* === ANNOUNCEMENT & MARQUEE === */
+    .announcement { height: 31px; display: grid; place-items: center; background: #281b20; color: #e8d9d0; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+    .marquee { overflow: hidden; white-space: nowrap; background: #2b1d23; color: #f5eae5; padding: 16px 0; }
+    .marquee-track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+    .marquee span { font: italic 17px var(--serif); padding: 0 28px; }
+    .marquee b { color: var(--gold); font-weight: 400; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    /* === SHARED SECTION === */
+    .section { padding: 95px 7%; }
+    .section-head { text-align: center; max-width: 610px; margin: 0 auto 43px; }
+    .eyebrow { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--wine); display: flex; gap: 12px; align-items: center; justify-content: center; }
+    .eyebrow:before, .eyebrow:after { content: ""; width: 27px; height: 1px; background: currentColor; }
+    .section-head h2 { font: 400 clamp(36px, 4.5vw, 57px)/1.1 var(--serif); margin: 15px 0; }
+    .section-head p { font-size: 11px; line-height: 1.9; color: var(--muted); margin: 0; }
+    .cta { display: inline-flex; align-items: center; justify-content: center; gap: 22px; background: var(--ink); color: white; border: 1px solid var(--ink); padding: 16px 23px; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; transition: var(--transition); width: max-content; }
+    .cta:hover { background: var(--wine); border-color: var(--wine); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .cta.outline { background: transparent; color: var(--ink); border-color: #a88a88; }
+    /* === HOME PAGE SPECIFIC === */
+    .hero { min-height: 690px; height: calc(100vh - 113px); max-height: 850px; display: grid; grid-template-columns: 46% 54%; background: #e9d8d2; overflow: hidden; position: relative; }
+    .hero-copy { padding: 8% 5% 8% 13%; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+    .hero h1 { font: 400 clamp(56px, 7vw, 100px)/0.98 var(--serif); letter-spacing: -3px; margin: 25px 0; }
+    .hero h1 em { color: var(--wine); }
+    .hero-copy p { max-width: 370px; font-size: 12px; line-height: 2; color: #705d60; margin: 0 0 30px; }
+    .hero-note { position: absolute; bottom: 28px; left: 13%; font-size: 8px; letter-spacing: 2px; color: #886f70; text-transform: uppercase; }
+    .hero-media { position: relative; overflow: hidden; background: #d2b9b1; }
+    .hero-media:before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, #e9d8d2, transparent 22%), linear-gradient(0deg, #29191d44, transparent 42%); }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; animation: heroZoom 17s ease-in-out infinite alternate; }
+    .hero-stamp { position: absolute; z-index: 2; right: 8%; bottom: 9%; border: 1px solid #fff9; border-radius: 50%; width: 125px; height: 125px; color: white; display: grid; place-items: center; text-align: center; font: italic 16px var(--serif); transform: rotate(-12deg); backdrop-filter: blur(4px); animation: float 5s infinite; }
+    .hero-stamp small { font: 8px var(--sans); letter-spacing: 2px; text-transform: uppercase; }
+    @keyframes heroZoom { to { transform: scale(1.12) translateX(-1%); } }
+    @keyframes float { 50% { transform: rotate(-5deg) translateY(-12px); } }
+    /* === COLLECTIONS 3D CARDS === */
+    .collections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; perspective: 1200px; }
+    .collection { height: 410px; position: relative; overflow: hidden; background: #ddc9c2; transform-style: preserve-3d; transition: transform 0.35s, box-shadow 0.35s; border-radius: 2px; }
+    .collection:hover { transform: rotateY(-2deg) rotateX(1deg) translateY(-5px); box-shadow: var(--shadow); }
+    .collection img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s; }
+    .collection:hover img { transform: scale(1.08); }
+    .collection:after { content: ""; position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, #160d12b8); }
+    .collection-copy { position: absolute; z-index: 2; bottom: 25px; left: 25px; color: white; }
+    .collection-copy small { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; }
+    .collection-copy h3 { font: 400 29px var(--serif); margin: 8px 0; }
+    .collection-copy button { border: 0; border-bottom: 1px solid white; padding: 0 0 6px; background: none; color: white; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; }
+    /* === SHOP PAGE === */
+    .shop { background: #f0e7e1; }
+    .filters { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: -10px 0 32px; }
+    .filter { background: transparent; border: 1px solid #d7c7c1; color: #735f63; padding: 10px 17px; font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.25s; }
+    .filter.active, .filter:hover { background: var(--ink); border-color: var(--ink); color: white; }
+    .products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+    .product { min-width: 0; cursor: pointer; perspective: 800px; }
+    .product-visual { height: 360px; position: relative; overflow: hidden; background: #e4d8d2; transform-style: preserve-3d; transition: transform 0.2s, box-shadow 0.3s; }
+    .product-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s; }
+    .product:hover .product-visual img { transform: scale(1.06); }
+    .tag { position: absolute; left: 12px; top: 12px; background: #fffaf0; padding: 7px 9px; font-size: 7px; letter-spacing: 1.4px; text-transform: uppercase; }
+    .product-tools { position: absolute; right: 12px; top: 12px; display: grid; gap: 7px; }
+    .round { border: 0; border-radius: 50%; width: 32px; height: 32px; background: #fffaf0eF; color: var(--ink); font-size: 15px; }
+    .quick { position: absolute; left: 10px; right: 10px; bottom: 10px; border: 0; background: #fffaf0ed; padding: 13px; font-size: 8px; letter-spacing: 1.8px; text-transform: uppercase; transform: translateY(65px); transition: 0.3s; }
+    .product:hover .quick { transform: none; }
+    .product-meta { padding: 14px 2px; }
+    .product-meta small { font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; color: #987f7d; }
+    .product-meta h3 { font: 400 17px var(--serif); margin: 7px 0; }
+    .price { font-size: 11px; color: var(--wine); }
+    .stars { float: right; color: #b48d55; letter-spacing: 2px; font-size: 9px; }
+    /* === STORY PAGE === */
+    .story { display: grid; grid-template-columns: 1fr 1fr; background: #e6d3cc; min-height: 570px; }
+    .story-photo { min-height: 570px; }
+    .story-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .story-copy { padding: 12% 13%; display: flex; flex-direction: column; justify-content: center; }
+    .story-copy h2 { font: 400 clamp(40px, 5vw, 62px)/1.05 var(--serif); margin: 20px 0; }
+    .story-copy p { font-size: 11px; line-height: 2; color: #715e61; margin: 0 0 25px; }
+    /* === EDITORIAL (home) === */
+    .editorial { background: #291d22; color: #f6eae5; padding: 85px 8%; display: grid; grid-template-columns: 1fr 1fr; gap: 8%; align-items: center; }
+    .editorial h2 { font: 400 clamp(43px, 5vw, 68px)/1.03 var(--serif); margin: 18px 0; }
+    .editorial p { font-size: 11px; line-height: 2; color: #cbbab7; max-width: 420px; }
+    .editorial .eyebrow { color: var(--gold); }
+    .editorial-art { height: 400px; position: relative; }
+    .editorial-art:before { content: ""; position: absolute; left: 0; top: 8%; width: 75%; height: 88%; border: 1px solid var(--gold); }
+    .editorial-art img { position: absolute; right: 0; top: 0; width: 78%; height: 100%; object-fit: cover; }
+    /* === RUNWAY 3D === */
+    .runway { padding: 90px 7%; background: #1c1519; color: #f6eae5; overflow: hidden; }
+    .runway .section-head h2 { color: #f6eae5; }
+    .runway-stage { height: 420px; position: relative; display: grid; place-items: center; perspective: 1000px; background: radial-gradient(ellipse at 50% 15%, #8e6574 0, #33212b 33%, #171116 75%); overflow: hidden; }
+    .runway-stage:before { content: ""; position: absolute; bottom: -50%; width: 55%; height: 110%; background: linear-gradient(90deg, #ffffff08, #ffffff22, #ffffff08); transform: rotateX(65deg); box-shadow: 0 0 80px #d4b37b22; }
+    .spot { position: absolute; top: -30%; width: 28%; height: 90%; background: linear-gradient(#fff4d433, transparent); filter: blur(20px); transform: rotate(15deg); }
+    .runway-model { position: relative; z-index: 2; height: 90%; width: auto; max-width: 70%; object-fit: contain; filter: drop-shadow(0 15px 30px #0008); animation: walk 5s ease-in-out infinite; }
+    .runway-label { position: absolute; z-index: 3; bottom: 18px; left: 22px; font: italic 19px var(--serif); }
+    .runway-controls { position: absolute; right: 20px; bottom: 15px; display: flex; gap: 8px; z-index: 4; }
+    .runway-controls button { border: 1px solid #ffffff66; background: #21151b99; color: white; padding: 9px 14px; }
+    @keyframes walk { 50% { transform: translateY(-8px) rotateY(2deg); } }
+    /* === REVIEWS === */
+    .reviews { background: #f3ebe5; }
+    .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .review { background: #fffaf6; padding: 28px; border: 1px solid var(--line); }
+    .review .stars { float: none; }
+    .review p { font: italic 17px/1.7 var(--serif); color: #655256; }
+    .review small { font-size: 8px; letter-spacing: 1.6px; color: #947e7c; text-transform: uppercase; }
+    /* === NEWSLETTER === */
+    .newsletter { padding: 85px 7%; text-align: center; background: #e8d6d0; }
+    .newsletter h2 { font: 400 clamp(37px, 5vw, 56px) var(--serif); margin: 15px 0; }
+    .newsletter p { font-size: 11px; color: #806e70; }
+    .subscribe { display: flex; max-width: 460px; margin: 27px auto 0; border-bottom: 1px solid #997c7d; }
+    .subscribe input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; padding: 14px 4px; font-size: 11px; }
+    .subscribe button { border: 0; background: none; color: var(--wine); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; }
+    /* === FOOTER === */
+    footer { background: #21171b; color: #f5e9e3; padding: 60px 7% 22px; margin-top: auto; }
+    .foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 35px; padding-bottom: 45px; }
+    .foot-brand img { width: 100px; height: 75px; object-fit: contain; }
+    .foot-brand h3 { font: 400 23px var(--serif); letter-spacing: 5px; margin: 5px 0; }
+    .foot-grid p { font-size: 10px; line-height: 1.9; color: #bba9a6; max-width: 250px; }
+    .foot-col h4 { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin: 8px 0 18px; }
+    .foot-col a { display: block; font-size: 10px; color: #cbbab6; margin: 12px 0; }
+    .copyright { border-top: 1px solid #ffffff20; padding-top: 20px; display: flex; justify-content: space-between; color: #9c8a88; font-size: 8px; letter-spacing: 1px; }
+    /* === OVERLAY & DETAILS === */
+    .reveal { opacity: 0; transform: translateY(28px); transition: 0.8s; }
+    .reveal.show { opacity: 1; transform: none; }
+    .overlay { position: fixed; inset: 0; background: #160d12c9; z-index: 100; opacity: 0; visibility: hidden; transition: 0.35s; backdrop-filter: blur(9px); }
+    .overlay.open { opacity: 1; visibility: visible; }
+    .detail { position: fixed; inset: 0; z-index: 110; background: var(--bg); overflow: auto; transform: translateY(35px) scale(0.985); opacity: 0; visibility: hidden; transition: 0.5s cubic-bezier(0.2, 0.75, 0.2, 1); }
+    .detail.open { transform: none; opacity: 1; visibility: visible; }
+    .detail-top { height: 66px; padding: 0 4%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #f8f2edeF; backdrop-filter: blur(15px); z-index: 5; }
+    .back { border: 0; background: none; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; }
+    .detail-brand { font: 400 18px var(--serif); letter-spacing: 5px; color: var(--wine); }
+    .detail-body { display: grid; grid-template-columns: 56% 44%; max-width: 1450px; margin: auto; }
+    .gallery { padding: 32px 5% 55px 7%; display: grid; grid-template-columns: 78px 1fr; gap: 15px; align-content: start; }
+    .thumbs { display: grid; gap: 10px; align-content: start; }
+    .thumb { border: 1px solid transparent; padding: 0; background: none; height: 100px; overflow: hidden; }
+    .thumb.active { border-color: var(--wine); }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .main-image { position: relative; height: min(76vh, 760px); min-height: 500px; overflow: hidden; background: #e6d9d3; perspective: 1000px; }
+    .main-image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.25s, transform 0.4s; cursor: zoom-in; }
+    .main-image.zoom img { transform: scale(1.5); cursor: zoom-out; }
+    .gallery-arrows { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 7px; }
+    .gallery-arrows button { border: 0; background: #fffaf0e8; width: 36px; height: 36px; }
+    .image-count { position: absolute; bottom: 24px; left: 18px; background: #fffaf0d9; padding: 7px 10px; font-size: 8px; letter-spacing: 1px; }
+    .detail-info { padding: 65px 10% 60px 8%; max-width: 600px; }
+    .detail-info .eyebrow { font-size: 8px; justify-content: flex-start; }
+    .detail-info .eyebrow:before { display: none; }
+    .detail-info h1 { font: 400 clamp(34px, 4vw, 52px)/1.08 var(--serif); margin: 16px 0; }
+    .rating { font-size: 10px; color: #b28b54; letter-spacing: 2px; }
+    .rating span { color: #8a7779; letter-spacing: 0; margin-left: 8px; }
+    .detail-price { font-size: 17px; color: var(--wine); margin: 18px 0; }
+    .detail-desc { font-size: 11px; line-height: 1.9; color: #77666a; }
+    .option-label { font-size: 8px; letter-spacing: 1.7px; text-transform: uppercase; margin: 24px 0 11px; display: block; }
+    .sizes { display: flex; gap: 7px; flex-wrap: wrap; }
+    .size { width: 43px; height: 39px; border: 1px solid #d8c8c2; background: transparent; font-size: 9px; }
+    .size.selected { background: var(--ink); border-color: var(--ink); color: white; }
+    .colors { display: flex; gap: 10px; }
+    .swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--bg); outline: 1px solid #c6b4ae; }
+    .swatch.selected { outline: 2px solid var(--wine); }
+    .qty-row { display: flex; align-items: center; gap: 18px; margin: 23px 0; }
+    .qty { display: flex; align-items: center; border: 1px solid #d8c8c2; }
+    .qty button { border: 0; background: none; width: 34px; height: 36px; }
+    .qty span { font-size: 10px; min-width: 18px; text-align: center; }
+    .detail-actions { display: grid; grid-template-columns: 1fr 52px; gap: 9px; }
+    .detail-actions .cta { width: 100%; }
+    .heart { border: 1px solid #cbbab5; background: transparent; font-size: 19px; }
+    .detail-accordions { margin-top: 28px; border-top: 1px solid var(--line); }
+    .acc { border-bottom: 1px solid var(--line); }
+    .acc summary { padding: 15px 0; list-style: none; cursor: pointer; font-size: 9px; letter-spacing: 1.3px; text-transform: uppercase; }
+    .acc summary:after { content: "+"; float: right; }
+    .acc[open] summary:after { content: "−"; }
+    .acc p { font-size: 10px; line-height: 1.8; color: var(--muted); padding: 0 0 12px; margin: 0; }
+    .video-panel { margin: 0 7% 70px; background: #291d22; color: white; display: grid; grid-template-columns: 1fr 1fr; min-height: 280px; }
+    .video-frame { position: relative; min-height: 280px; background: #38262f; overflow: hidden; }
+    .video-frame video { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+    .video-placeholder { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(135deg, #644452, #20171d); font: italic 24px var(--serif); text-align: center; padding: 25px; }
+    .video-copy { padding: 45px; display: flex; flex-direction: column; justify-content: center; }
+    .video-copy h3 { font: 400 30px var(--serif); margin: 10px 0; }
+    .video-copy p { font-size: 10px; line-height: 1.8; color: #cbbab7; }
+    .video-copy button { border: 1px solid #ffffff66; background: none; color: white; padding: 12px 18px; width: max-content; font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
+    /* === DRAWERS / CHECKOUT / ADMIN === */
+    .drawer { position: fixed; right: 0; top: 0; height: 100%; width: min(440px, 100%); z-index: 130; background: var(--paper); transform: translateX(105%); transition: 0.4s; display: flex; flex-direction: column; padding: 25px; }
+    .drawer.open { transform: none; }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 17px; }
+    .drawer-head h3 { font: 400 27px var(--serif); margin: 0; }
+    .close { border: 0; background: none; font-size: 25px; }
+    .cart-list { flex: 1; overflow: auto; padding: 18px 0; }
+    .cart-line { display: grid; grid-template-columns: 76px 1fr auto; gap: 12px; margin-bottom: 18px; }
+    .cart-line img { width: 76px; height: 95px; object-fit: cover; }
+    .cart-line h4 { font: 400 15px var(--serif); margin: 5px 0; }
+    .cart-line small { font-size: 9px; color: var(--muted); }
+    .cart-line button { border: 0; background: none; color: var(--wine); font-size: 9px; padding: 8px 0; }
+    .cart-bottom { border-top: 1px solid var(--line); padding-top: 18px; }
+    .cart-bottom div { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 16px; }
+    .cart-bottom .cta { width: 100%; }
+    .checkout { position: fixed; inset: 0; z-index: 140; background: var(--bg); overflow: auto; transform: translateY(20px); opacity: 0; visibility: hidden; transition: 0.35s; padding: 25px; }
+    .checkout.open { transform: none; opacity: 1; visibility: visible; }
+    .checkout-inner { max-width: 900px; margin: 20px auto; }
+    .checkout-head { display: flex; justify-content: space-between; align-items: center; }
+    .checkout h1 { font: 400 38px var(--serif); }
+    .checkout-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 35px; }
+    .checkout form { display: grid; gap: 12px; }
+    .checkout input, .checkout select, .checkout textarea { width: 100%; padding: 13px; border: 1px solid var(--line); background: #fffaf6; outline-color: var(--rose); font-size: 11px; }
+    .checkout label { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+    .checkout-summary { background: #f0e7e1; padding: 22px; height: max-content; }
+    .checkout-summary h3 { font: 400 22px var(--serif); }
+    .checkout-summary p { font-size: 11px; display: flex; justify-content: space-between; }
+    .toast { position: fixed; bottom: 22px; left: 50%; transform: translate(-50%, 100px); opacity: 0; z-index: 250; background: #291d22; color: white; padding: 14px 22px; font-size: 10px; letter-spacing: 0.5px; transition: 0.3s; }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    .admin { position: fixed; inset: 0; z-index: 160; background: #f8f2ed; overflow: auto; display: none; padding: 28px; }
+    .admin.open { display: block; }
+    .admin-wrap { max-width: 1050px; margin: auto; }
+    .admin-top { display: flex; justify-content: space-between; align-items: center; }
+    .admin h1 { font: 400 36px var(--serif); }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .admin input, .admin textarea, .admin select { width: 100%; padding: 12px; border: 1px solid var(--line); background: white; margin: 5px 0 13px; font-size: 11px; }
+    .admin label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; }
+    .admin button { padding: 12px 18px; border: 0; background: var(--ink); color: white; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+    .admin table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 11px; }
+    .admin td, .admin th { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; }
+    /* === RESPONSIVE === */
+    @media(max-width: 1050px) {
+      .nav { gap: 16px; }
+      .nav a { font-size: 8px; }
+      .products { grid-template-columns: repeat(3, 1fr); }
+      .product-visual { height: 330px; }
+      .detail-info { padding-right: 6%; }
+    }
+    @media(max-width: 760px) {
+      .announcement { font-size: 7px; letter-spacing: 1px; }
+      .brand img { width: 50px; height: 50px; }
+      .brand-name { font-size: 19px; letter-spacing: 4px; }
+      header { height: 70px; padding: 0 4%; }
+      .menu-btn { display: block; }
+      .nav { display: none; position: absolute; left: 0; right: 0; top: 70px; background: var(--bg); padding: 20px 7%; flex-direction: column; align-items: flex-start; gap: 13px; border-bottom: 1px solid var(--line); }
+      .nav.open { display: flex; }
+      .hero { height: auto; max-height: none; grid-template-columns: 1fr; }
+      .hero-copy { min-height: 490px; padding: 70px 8% 85px; }
+      .hero h1 { font-size: 66px; }
+      .hero-note { left: 8%; }
+      .hero-media { height: 500px; }
+      .collections { grid-template-columns: 1fr; }
+      .collection { height: 440px; }
+      .section { padding: 70px 6%; }
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .product-visual { height: 260px; }
+      .quick { transform: none; }
+      .story { grid-template-columns: 1fr; }
+      .story-photo { min-height: 430px; }
+      .story-copy { padding: 70px 9%; }
+      .editorial { grid-template-columns: 1fr; padding: 70px 8%; gap: 35px; }
+      .editorial-art { height: 340px; }
+      .runway { padding: 70px 6%; }
+      .runway-stage { height: 350px; }
+      .runway-model { max-width: 85%; }
+      .review-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr 1fr; gap: 25px 18px; }
+      .foot-brand { grid-column: 1/-1; }
+      .copyright { flex-direction: column; gap: 10px; }
+      .detail-body { grid-template-columns: 1fr; }
+      .gallery { padding: 17px 4%; grid-template-columns: 55px 1fr; gap: 9px; }
+      .thumb { height: 72px; }
+      .main-image { height: 70vh; min-height: 420px; }
+      .detail-info { padding: 25px 7% 45px; max-width: none; }
+      .detail-info h1 { font-size: 38px; }
+      .video-panel { grid-template-columns: 1fr; margin: 0 4% 45px; }
+      .video-frame { min-height: 240px; }
+      .video-copy { padding: 28px; }
+      .checkout-grid { grid-template-columns: 1fr; }
+      .checkout { padding: 15px; }
+      .admin-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width: 390px) {
+      .product-visual { height: 220px; }
+      .product-meta h3 { font-size: 15px; }
+      .stars { display: none; }
+      .actions { gap: 1px; }
+      .icon { padding: 6px; }
+    }
+    @media(prefers-reduced-motion: reduce) {
+      *, *:before, *:after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- INTRO SPLASH (3D logo using ravoshh.png) -->
+  <div id="intro">
+    <div class="intro-inner">
+      <div class="intro-logo-wrap">
+        <img class="intro-logo" src="ravoshlogo.png" alt="RAVOSH 3D logo">
+      </div>
+      <div class="intro-name">RAVOSH</div>
+      <div class="intro-tag">WHERE STYLE MEETS SIMPLICITY</div>
+      <div class="loader"><i></i></div>
+      <div class="load-num">PREPARING YOUR EXPERIENCE</div>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENT BAR (persistent) -->
+  <div class="announcement">A little elegance in every detail &nbsp; ✦ &nbsp; Discover the new RAVOSH collection</div>
+
+  <!-- HEADER (persistent) -->
+  <header>
+    <a class="brand" href="#" data-page="home">
+        <img src="ravoshlogo.png">
+      <span><span class="brand-name">RAVOSH</span><span class="brand-tag">WHERE STYLE MEETS SIMPLICITY</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#" data-page="home" class="active">Home</a>
+      <a href="#" data-page="collections">Collections</a>
+      <a href="#" data-page="shop">Shop</a>
+      <a href="#" data-page="story">Our story</a>
+      <a href="#" data-page="contact">Contact</a>
+    </nav>
+    <div class="actions">
+      <button class="icon" id="searchBtn" aria-label="Search">⌕</button>
+      <button class="icon" id="wishBtn" aria-label="Wishlist">♡<span class="count" id="wishCount">0</span></button>
+      <button class="icon" id="cartBtn" aria-label="Shopping bag">♧<span class="count" id="cartCount">0</span></button>
+      <button class="icon menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ========== PAGE: HOME ========== -->
+  <div class="page active" id="page-home">
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">The new season edit</div>
+        <h1>Beauty in<br>every <em>detail.</em></h1>
+        <p>Discover the art of effortless elegance. Thoughtful silhouettes, graceful details and pieces that make every moment feel extraordinary.</p>
+        <a class="cta" href="#" data-page="shop">Explore collection <span>↗</span></a>
+        <div class="hero-note">Elegance is an attitude · RAVOSH · Est. 2026</div>
+      </div>
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=90" alt="Luxury fashion campaign model">
+        <div class="hero-stamp">Made to<br>be remembered<br><small>Ravosh · 2026</small></div>
+      </div>
+    </section>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>THE ART OF EVERYDAY ELEGANCE <b>✦</b></span><span>CONFIDENCE IN EVERY THREAD <b>✦</b></span><span>STYLE THAT FEELS LIKE YOU <b>✦</b></span>
+        <span>THE ART OF EVERYDAY ELEGANCE <b>✦</b></span><span>CONFIDENCE IN EVERY THREAD <b>✦</b></span><span>STYLE THAT FEELS LIKE YOU <b>✦</b></span>
+      </div>
+    </div>
+    <section class="section" id="collections-preview">
+      <div class="section-head reveal">
+        <div class="eyebrow">Find your feeling</div>
+        <h2>Curated for every you.</h2>
+        <p>From effortless daytime looks to after-dark elegance, discover a collection made to move with you.</p>
+      </div>
+      <div class="collections">
+        <article class="collection reveal" data-page="collections">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=85" alt="Luxury dresses">
+          <div class="collection-copy"><small>01 / Refined silhouettes</small><h3>Luxury Dresses</h3><button>Explore pieces ↗</button></div>
+        </article>
+        <article class="collection reveal" data-page="collections">
+          <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=900&q=85" alt="Evening wear">
+          <div class="collection-copy"><small>02 / After dark</small><h3>Evening Wear</h3><button>Discover more ↗</button></div>
+        </article>
+        <article class="collection reveal" data-page="collections">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85" alt="Casual fashion">
+          <div class="collection-copy"><small>03 / Everyday edit</small><h3>Modern Essentials</h3><button>Explore details ↗</button></div>
+        </article>
+      </div>
+    </section>
+    <section class="editorial">
+      <div class="reveal">
+        <div class="eyebrow" style="color:#d5bd8c">The RAVOSH point of view</div>
+        <h2>Less noise.<br>More <em>you.</em></h2>
+        <p>Build a wardrobe that feels effortless and looks unforgettable. Explore pieces designed to mix, match and make your own.</p>
+        <a class="cta outline" href="#" data-page="shop" style="border-color:#c9ad78;color:#f6eae5">Find your look ↗</a>
+      </div>
+      <div class="editorial-art reveal">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85" alt="Fashion editorial portrait">
+      </div>
+    </section>
+    <section class="runway" id="runway">
+      <div class="section-head reveal">
+        <div class="eyebrow" style="justify-content:center;color:#d5bd8c">The RAVOSH experience</div>
+        <h2>Walk into the spotlight.</h2>
+        <p style="color:#cbbab7">A moving editorial inspired by the energy of the runway.</p>
+      </div>
+      <div class="runway-stage">
+        <div class="spot"></div>
+        <img class="runway-model" id="runwayModel" src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=85" alt="Runway fashion look">
+        <div class="runway-label" id="runwayLabel">01 — The evening edit</div>
+        <div class="runway-controls">
+          <button id="runwayPrev">←</button><button id="runwayNext">Next look →</button>
+        </div>
+      </div>
+    </section>
+    <section class="section reviews">
+      <div class="section-head reveal"><div class="eyebrow">Kind words</div><h2>Love, beautifully worn.</h2><p>What makes us happiest is becoming part of your favourite moments.</p></div>
+      <div class="review-grid">
+        <article class="review reveal"><div class="stars">★★★★★</div><p>“Beautiful details and such an elegant feel. It made my occasion feel even more special.”</p><small>RAVOSH customer · Editorial review</small></article>
+        <article class="review reveal"><div class="stars">★★★★★</div><p>“The silhouette, the fabric, the finishing — everything feels thoughtfully chosen.”</p><small>RAVOSH customer · Style review</small></article>
+        <article class="review reveal"><div class="stars">★★★★★</div><p>“A timeless piece I can style in so many ways. Effortless and lovely.”</p><small>RAVOSH customer · Customer note</small></article>
+      </div>
+    </section>
+    <section class="newsletter">
+      <div class="eyebrow" style="justify-content:center">A note from us</div>
+      <h2>Stay in the style loop.</h2>
+      <p>New edits, thoughtful inspiration and a little something special. Straight to your inbox.</p>
+      <form class="subscribe" id="subscribeHome"><input type="email" placeholder="Your email address" required><button>Join the list ↗</button></form>
+      <p id="subscribeMsgHome" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <!-- ========== PAGE: COLLECTIONS ========== -->
+  <div class="page" id="page-collections">
+    <section class="section" style="padding-top:60px;">
+      <div class="section-head reveal show">
+        <div class="eyebrow">The RAVOSH archive</div>
+        <h2>Curated collections.</h2>
+        <p>Explore our latest edits — each collection tells a different story of elegance, confidence and modern femininity.</p>
+      </div>
+      <div class="collections" style="grid-template-columns:1fr 1fr;gap:24px;">
+        <article class="collection reveal show" style="height:520px;">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" alt="Luxury dresses">
+          <div class="collection-copy"><small>01 / Refined silhouettes</small><h3>Luxury Dresses</h3><p style="font-size:10px;color:#ddd;max-width:280px;margin:8px 0;">Fluid satins, delicate florals and architectural shapes — dresses that move with you from day to night.</p><button data-page="shop">Shop dresses ↗</button></div>
+        </article>
+        <article class="collection reveal show" style="height:520px;">
+          <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=1200&q=85" alt="Evening wear">
+          <div class="collection-copy"><small>02 / After dark</small><h3>Evening Wear</h3><p style="font-size:10px;color:#ddd;max-width:280px;margin:8px 0;">Sculptural gowns, rich burgundies and champagne sheens for the nights you'll remember.</p><button data-page="shop">Shop evening ↗</button></div>
+        </article>
+        <article class="collection reveal show" style="height:520px;">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Casual fashion">
+          <div class="collection-copy"><small>03 / Everyday edit</small><h3>Modern Essentials</h3><p style="font-size:10px;color:#ddd;max-width:280px;margin:8px 0;">Elevated basics and relaxed tailoring — the building blocks of a considered wardrobe.</p><button data-page="shop">Shop essentials ↗</button></div>
+        </article>
+        <article class="collection reveal show" style="height:520px;">
+          <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=1200&q=85" alt="Co-ord sets">
+          <div class="collection-copy"><small>04 / The co-ord edit</small><h3>Co-ord Sets</h3><p style="font-size:10px;color:#ddd;max-width:280px;margin:8px 0;">Effortless matching sets that bring instant polish — wear together or style apart.</p><button data-page="shop">Shop sets ↗</button></div>
+        </article>
+      </div>
+      <div style="text-align:center;margin-top:50px;">
+        <a class="cta" href="#" data-page="shop">Browse all products ↗</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== PAGE: SHOP ========== -->
+  <div class="page" id="page-shop">
+    <section class="section shop" id="shop" style="padding-top:60px;">
+      <div class="section-head reveal show">
+        <div class="eyebrow">The RAVOSH selection</div>
+        <h2>Pieces to fall for.</h2>
+        <p>Meet your new wardrobe favourites. Considered shapes, beautiful textures, endless possibilities.</p>
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="All">All pieces</button>
+        <button class="filter" data-filter="Dresses">Dresses</button>
+        <button class="filter" data-filter="Evening">Evening wear</button>
+        <button class="filter" data-filter="Casual">Casual</button>
+        <button class="filter" data-filter="Sets">Co-ord sets</button>
+      </div>
+      <div class="products" id="products"></div>
+    </section>
+  </div>
+
+  <!-- ========== PAGE: STORY ========== -->
+  <div class="page" id="page-story">
+    <section class="story" style="min-height:100vh;">
+      <div class="story-photo" style="min-height:100vh;">
+        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=90" alt="RAVOSH editorial fashion">
+      </div>
+      <div class="story-copy reveal show" style="padding:8% 12%;">
+        <div class="eyebrow">A little about us</div>
+        <h2>Style is personal.<br><em>Make it yours.</em></h2>
+        <p style="max-width:480px;">At RAVOSH, we believe the best style doesn't shout. It speaks in thoughtful details, beautiful fabrics and the confidence to be completely yourself. Every piece is selected to make getting dressed feel a little more special.</p>
+        <p style="max-width:480px;">Founded in 2026, RAVOSH was born from a simple idea: that elegance should feel effortless. We work with independent ateliers and fabric mills to create limited-run pieces that balance modern silhouettes with timeless craft.</p>
+        <p style="max-width:480px;">Our collections are designed to be worn, loved and lived in — not just for special occasions, but for the everyday moments that deserve a little beauty.</p>
+        <a class="cta outline" href="#" data-page="contact">Get in touch ↗</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== PAGE: CONTACT ========== -->
+  <div class="page" id="page-contact">
+    <section class="section" style="padding-top:80px;max-width:800px;margin:0 auto;text-align:center;">
+      <div class="eyebrow" style="justify-content:center">Say hello</div>
+      <h2 style="font:400 clamp(36px,4.5vw,57px)/1.1 var(--serif);margin:20px 0;">We'd love to hear from you.</h2>
+      <p style="font-size:12px;line-height:2;color:var(--muted);max-width:480px;margin:0 auto 40px;">Whether you have a question about sizing, need styling advice, or just want to say hello — our team is here for you.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;text-align:left;margin-bottom:50px;">
+        <div style="background:var(--paper);padding:30px;border:1px solid var(--line);">
+          <h4 style="font:400 20px var(--serif);margin-bottom:12px;">Customer care</h4>
+          <p style="font-size:11px;line-height:1.9;color:var(--muted);">For order enquiries, returns and sizing advice.<br><a href="mailto:care@ravosh.com" style="color:var(--wine);text-decoration:underline;">care@ravosh.com</a></p>
+        </div>
+        <div style="background:var(--paper);padding:30px;border:1px solid var(--line);">
+          <h4 style="font:400 20px var(--serif);margin-bottom:12px;">Press & partnerships</h4>
+          <p style="font-size:11px;line-height:1.9;color:var(--muted);">For editorial requests and collaborations.<br><a href="mailto:press@ravosh.com" style="color:var(--wine);text-decoration:underline;">press@ravosh.com</a></p>
+        </div>
+      </div>
+      <div class="newsletter" style="background:transparent;padding:0;">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;">Or join our mailing list for early access to new collections.</p>
+        <form class="subscribe" id="subscribeContact" style="margin:0 auto;"><input type="email" placeholder="Your email address" required><button>Join the list ↗</button></form>
+        <p id="subscribeMsgContact" aria-live="polite"></p>
+      </div>
+      <p style="font-size:10px;color:var(--muted);margin-top:40px;">RAVOSH Studio · London · Est. 2026</p>
+    </section>
+  </div>
+
+  <!-- FOOTER (persistent) -->
+  <footer>
+    <div class="foot-grid">
+      <div class="foot-brand">
+<img src="ravoshlogo.png">
+        <h3>RAVOSH</h3>
+        <p>Where style meets simplicity. Thoughtful fashion for the way you live, move and express yourself.</p>
+      </div>
+      <div class="foot-col"><h4>Explore</h4><a href="#" data-page="home">Home</a><a href="#" data-page="collections">Collections</a><a href="#" data-page="shop">Shop all</a><a href="#" data-page="story">Our story</a></div>
+      <div class="foot-col"><h4>Customer care</h4><a href="#" data-page="contact">Contact us</a><a href="#" data-page="contact">Shipping & delivery</a><a href="#" data-page="contact">Returns & exchanges</a><a href="#" data-page="contact">Size guide</a></div>
+      <div class="foot-col"><h4>Get in touch</h4><p>We would love to hear from you.</p><a href="mailto:hello@ravosh.com">hello@ravosh.com</a><a href="#" data-page="contact">Instagram ↗</a><a href="#" data-page="contact">Pinterest ↗</a><a href="#" id="adminLink">Admin access</a></div>
+    </div>
+    <div class="copyright"><span>© 2026 RAVOSH. ALL RIGHTS RESERVED.</span><span>MADE WITH INTENTION · WHERE STYLE MEETS SIMPLICITY</span></div>
+  </footer>
+
+  <!-- ========== OVERLAY / DETAIL / DRAWERS / CHECKOUT / ADMIN / TOAST (persistent) ========== -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="detail" id="detail">
+    <div class="detail-top">
+      <button class="back" id="detailBack">← Back to collection</button>
+      <div class="detail-brand">RAVOSH</div>
+      <button class="back" id="detailCart">BAG ♧</button>
+    </div>
+    <div class="detail-body">
+      <div class="gallery">
+        <div class="thumbs" id="thumbs"></div>
+        <div class="main-image" id="mainImage">
+          <img id="largeImage" src="" alt="">
+          <div class="image-count" id="imageCount">01 / 06</div>
+          <div class="gallery-arrows"><button id="prevImg">←</button><button id="nextImg">→</button></div>
+        </div>
+      </div>
+      <div class="detail-info">
+        <div class="eyebrow" style="justify-content:flex-start">RAVOSH / THE COLLECTION</div>
+        <h1 id="detailName"></h1>
+        <div class="rating">★★★★★ <span id="ratingText">4.9 · Customer favourite</span></div>
+        <div class="detail-price" id="detailPrice"></div>
+        <p class="detail-desc" id="detailDesc"></p>
+        <span class="option-label">Select size — <span id="selectedSize">Choose one</span></span>
+        <div class="sizes" id="sizes"></div>
+        <span class="option-label">Select colour</span>
+        <div class="colors" id="colors"></div>
+        <div class="qty-row"><span class="option-label" style="margin:0">Quantity</span><div class="qty"><button id="qtyMinus">−</button><span id="qtyValue">1</span><button id="qtyPlus">+</button></div></div>
+        <div class="detail-actions"><button class="cta" id="addDetail">Add to bag · <span id="detailButtonPrice"></span></button><button class="heart" id="detailHeart">♡</button></div>
+        <div class="detail-accordions">
+          <details class="acc" open><summary>Product details</summary><p id="fabricText">Carefully selected fabric with a graceful drape and considered finishing.</p></details>
+          <details class="acc"><summary>Fit & sizing</summary><p>Designed for a comfortable, flattering fit. Please consult the size guide and choose your usual size. Measurements should be confirmed before production.</p></details>
+          <details class="acc"><summary>Care instructions</summary><p>Follow the garment care label. For delicate fabrics and embellishments, professional gentle cleaning is recommended.</p></details>
+          <details class="acc"><summary>Shipping & returns</summary><p>Shipping timelines, return eligibility and charges must be configured by the store owner before launch.</p></details>
+        </div>
+      </div>
+    </div>
+    <div class="video-panel">
+      <div class="video-frame">
+        <video id="productVideo" controls playsinline muted loop poster=""><source id="videoSource" src="" type="video/mp4"></video>
+        <div class="video-placeholder" id="videoPlaceholder">RAVOSH<br>THE MOVEMENT EDIT</div>
+      </div>
+      <div class="video-copy">
+        <div class="eyebrow" style="color:#d5bd8c;justify-content:flex-start">See it in motion</div>
+        <h3>Every detail, in motion.</h3>
+        <p>Discover the silhouette, movement and finishing of this look in our product film. Replace the demo film with a video of this exact garment for a true product-specific experience.</p>
+        <button id="playVideo">Play product film ▶</button>
+      </div>
+    </div>
+  </aside>
+  <aside class="drawer" id="cartDrawer"><div class="drawer-head"><h3>Your bag</h3><button class="close" id="cartClose">×</button></div><div class="cart-list" id="cartList"></div><div class="cart-bottom"><div><span>Subtotal</span><strong id="subtotal">$0.00</strong></div><button class="cta" id="checkoutOpen">Continue to checkout ↗</button></div></aside>
+  <aside class="drawer" id="wishDrawer"><div class="drawer-head"><h3>Your wishlist</h3><button class="close" id="wishClose">×</button></div><div class="cart-list" id="wishList"></div></aside>
+  <section class="checkout" id="checkout">
+    <div class="checkout-inner">
+      <div class="checkout-head"><div class="detail-brand">RAVOSH</div><button class="close" id="checkoutClose">×</button></div>
+      <h1>Complete your order.</h1>
+      <div class="checkout-grid">
+        <form id="checkoutForm">
+          <label>Full name<input required name="name" placeholder="Your full name"></label>
+          <label>Email address<input required type="email" name="email" placeholder="you@example.com"></label>
+          <label>Phone number<input required name="phone" placeholder="+92"></label>
+          <label>Delivery address<textarea required name="address" rows="3" placeholder="Street, city, postal code"></textarea></label>
+          <label>Payment method<select name="payment"><option>Cash on delivery</option><option>Bank transfer (confirm manually)</option></select></label>
+          <button class="cta">Place demo order ↗</button>
+          <small style="color:#927e7d;line-height:1.7">Demo checkout only. Connect a verified payment provider and order backend before accepting real payments.</small>
+        </form>
+        <div class="checkout-summary"><h3>Order summary</h3><div id="checkoutLines"></div><p><span>Shipping</span><strong id="shipping">$0.00</strong></p><p><span>Total</span><strong id="checkoutTotal">$0.00</strong></p></div>
+      </div>
+    </div>
+  </section>
+  <section class="admin" id="admin">
+    <div class="admin-wrap">
+      <div class="admin-top"><h1>RAVOSH Studio</h1><button id="adminClose">Close dashboard</button></div>
+      <p style="color:#88777a;font-size:11px;line-height:1.8">Local demo product manager. Products are saved in this browser only. Add a secure backend and authentication before publishing an admin dashboard.</p>
+      <form id="productForm">
+        <div class="admin-grid">
+          <label>Product name<input required name="name"></label>
+          <label>Price (USD)<input required name="price" type="number" min="0" step=".01"></label>
+          <label>Category<select name="category"><option>Dresses</option><option>Evening</option><option>Casual</option><option>Sets</option></select></label>
+          <label>Image URL<input required name="image" placeholder="https://..."></label>
+          <label>Additional gallery image URLs (comma separated)<textarea name="gallery" rows="2"></textarea></label>
+          <label>Description<textarea name="description" rows="2"></textarea></label>
+        </div>
+        <button>Add product to this browser</button>
+      </form>
+      <h3 style="font:400 23px var(--serif);margin-top:30px;">Current products</h3>
+      <div id="adminProducts"></div>
+    </div>
+  </section>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function(){
+      // ---------- Data ----------
+      const galleryImgs = {
+        rose:["photo-1595777457583-95e059d581b8","photo-1566174053879-31528523f8ae","photo-1539008835657-9e8e9680c956","photo-1515886657613-9f3515b0c78f","photo-1496747611176-843222e1e57c","photo-1483985988355-763728e1935b"],
+        champagne:["photo-1566174053879-31528523f8ae","photo-1539008835657-9e8e9680c956","photo-1490481651871-ab68de25d43d","photo-1515886657613-9f3515b0c78f","photo-1534528741775-53994a69daeb","photo-1529139574466-a303027c1d8b"],
+        burgundy:["photo-1539008835657-9e8e9680c956","photo-1595777457583-95e059d581b8","photo-1566174053879-31528523f8ae","photo-1515886657613-9f3515b0c78f","photo-1496747611176-843222e1e57c","photo-1534528741775-53994a69daeb"],
+        floral:["photo-1496747611176-843222e1e57c","photo-1483985988355-763728e1935b","photo-1490481651871-ab68de25d43d","photo-1515886657613-9f3515b0c78f","photo-1529139574466-a303027c1d8b","photo-1534528741775-53994a69daeb"],
+        black:["photo-1566174053879-31528523f8ae","photo-1539008835657-9e8e9680c956","photo-1515886657613-9f3515b0c78f","photo-1529139574466-a303027c1d8b","photo-1534528741775-53994a69daeb","photo-1490481651871-ab68de25d43d"],
+        pink:["photo-1496747611176-843222e1e57c","photo-1595777457583-95e059d581b8","photo-1534528741775-53994a69daeb","photo-1515886657613-9f3515b0c78f","photo-1483985988355-763728e1935b","photo-1529139574466-a303027c1d8b"],
+        ivory:["photo-1490481651871-ab68de25d43d","photo-1539008835657-9e8e9680c956","photo-1496747611176-843222e1e57c","photo-1534528741775-53994a69daeb","photo-1515886657613-9f3515b0c78f","photo-1529139574466-a303027c1d8b"],
+        coord:["photo-1551232864-3f0890e580d9","photo-1483985988355-763728e1935b","photo-1490481651871-ab68de25d43d","photo-1515886657613-9f3515b0c78f","photo-1529139574466-a303027c1d8b","photo-1534528741775-53994a69daeb"],
+        casual:["photo-1483985988355-763728e1935b","photo-1551232864-3f0890e580d9","photo-1490481651871-ab68de25d43d","photo-1515886657613-9f3515b0c78f","photo-1529139574466-a303027c1d8b","photo-1534528741775-53994a69daeb"],
+        formal:["photo-1529139574466-a303027c1d8b","photo-1566174053879-31528523f8ae","photo-1539008835657-9e8e9680c956","photo-1515886657613-9f3515b0c78f","photo-1534528741775-53994a69daeb","photo-1490481651871-ab68de25d43d"],
+        pearl:["photo-1595777457583-95e059d581b8","photo-1566174053879-31528523f8ae","photo-1539008835657-9e8e9680c956","photo-1496747611176-843222e1e57c","photo-1515886657613-9f3515b0c78f","photo-1534528741775-53994a69daeb"],
+        sleeve:["photo-1490481651871-ab68de25d43d","photo-1539008835657-9e8e9680c956","photo-1566174053879-31528523f8ae","photo-1515886657613-9f3515b0c78f","photo-1483985988355-763728e1935b","photo-1529139574466-a303027c1d8b"]
+      };
+      const photo = id => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1100&q=88`;
+      const vids = [
+        "https://videos.pexels.com/video-files/855028/855028-hd_1920_1080_25fps.mp4",
+        "https://videos.pexels.com/video-files/3129595/3129595-hd_1920_1080_25fps.mp4",
+        "https://videos.pexels.com/video-files/7670834/7670834-hd_1920_1080_25fps.mp4"
+      ];
+      const seed = [
+        ["Rose Satin Evening Dress",89,"Dresses","Bestseller","rose","A graceful satin-inspired evening silhouette with fluid movement and a softly defined waist.","Satin-look finish · Elegant drape · Evening length"],
+        ["Champagne Silk Maxi Dress",129,"Evening","New arrival","champagne","A luminous champagne-toned statement designed for celebrations and unforgettable evenings.","Silk-look finish · Maxi length · Fluid silhouette"],
+        ["Burgundy Luxury Gown",159,"Evening","Editor's pick","burgundy","A dramatic burgundy occasion look with a refined silhouette and timeless appeal.","Premium occasion fabric · Floor length · Tailored fit"],
+        ["Floral Summer Dress",69,"Dresses","Light & easy","floral","A romantic floral-inspired look for sunny afternoons and relaxed getaways.","Lightweight feel · Summer length · Relaxed fit"],
+        ["Elegant Black Party Dress",99,"Evening","Bestseller","black","A confident black occasion piece with clean lines and understated drama.","Structured finish · Party length · Modern fit"],
+        ["Pink Embroidered Dress",119,"Dresses","Just in","pink","A feminine pink look inspired by delicate detailing and graceful finishing.","Embellished look · Soft texture · Occasion fit"],
+        ["Ivory Minimalist Dress",95,"Dresses","Minimal edit","ivory","An understated ivory silhouette for lovers of modern, quiet elegance.","Minimal detailing · Clean silhouette · Midi length"],
+        ["Luxury Two-Piece Co-ord",110,"Sets","RAVOSH set","coord","A coordinated two-piece look that brings effortless polish to your wardrobe.","Two-piece set · Versatile styling · Relaxed tailoring"],
+        ["Modern Casual Outfit",75,"Casual","Everyday","casual","An easy modern outfit for everyday styling, travel and relaxed moments.","Soft-touch look · Everyday fit · Easy care"],
+        ["Premium Formal Dress",145,"Evening","Limited edit","formal","A refined formal silhouette with an elevated finish for special occasions.","Premium look · Elegant length · Occasion wear"],
+        ["Pearl Detail Evening Gown",179,"Evening","Signature","pearl","A statement evening gown inspired by delicate pearl accents and graceful movement.","Pearl-inspired detail · Evening length · Statement fit"],
+        ["Elegant Long Sleeve Dress",105,"Dresses","New arrival","sleeve","A timeless long-sleeve design with a flattering shape and versatile styling.","Long sleeves · Refined shape · All-season styling"]
+      ];
+      let products = seed.map((p,i)=>({
+        id: i+1, name: p[0], price: p[1], category: p[2], tag: p[3], key: p[4],
+        description: p[5], fabric: p[6],
+        images: galleryImgs[p[4]].map(photo),
+        video: vids[i % vids.length],
+        sizes: ["XS","S","M","L","XL","XXL"],
+        colors: ["#71364d","#d5b9a8","#262126"]
+      }));
+      try {
+        const saved = JSON.parse(localStorage.getItem("ravoshProducts") || "null");
+        if (saved?.length) products = saved;
+      } catch(e) {}
+
+      let cart = JSON.parse(localStorage.getItem("ravoshCart") || "[]");
+      let wishlist = JSON.parse(localStorage.getItem("ravoshWish") || "[]");
+      let activeFilter = "All";
+      let current = null;
+      let imageIndex = 0;
+      let chosenSize = "";
+      let chosenColor = "#71364d";
+      let quantity = 1;
+
+      const $ = id => document.getElementById(id);
+      const usd = n => "$" + Number(n).toFixed(2);
+
+      // ---------- Page navigation ----------
+      function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById('page-' + pageId);
+        if (target) target.classList.add('active');
+        document.querySelectorAll('.nav a').forEach(a => {
+          a.classList.toggle('active', a.dataset.page === pageId);
+        });
+        $('nav').classList.remove('open');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (pageId === 'shop') renderProducts();
+        initReveal();
+      }
+
+      document.body.addEventListener('click', (e) => {
+        const link = e.target.closest('[data-page]');
+        if (link) {
+          e.preventDefault();
+          const page = link.dataset.page;
+          if (page) showPage(page);
+        }
+      });
+
+      // ---------- Persistence ----------
+      function persist() {
+        localStorage.setItem("ravoshProducts", JSON.stringify(products));
+        localStorage.setItem("ravoshCart", JSON.stringify(cart));
+        localStorage.setItem("ravoshWish", JSON.stringify(wishlist));
+      }
+
+      function toast(s) {
+        $("toast").textContent = s;
+        $("toast").classList.add("show");
+        setTimeout(() => $("toast").classList.remove("show"), 2400);
+      }
+
+      // ---------- Products ----------
+      function renderProducts() {
+        const list = products.filter(p => activeFilter === "All" || p.category === activeFilter);
+        $("products").innerHTML = list.map(p => `
+          <article class="product reveal show" data-open="${p.id}">
+            <div class="product-visual">
+              <img loading="lazy" src="${p.images[0]}" alt="${p.name}">
+              <span class="tag">${p.tag || "RAVOSH edit"}</span>
+              <div class="product-tools"><button class="round" data-wish="${p.id}" aria-label="Add to wishlist">${wishlist.some(w => w.id === p.id) ? "♥" : "♡"}</button></div>
+              <button class="quick" data-open="${p.id}">Discover this look ↗</button>
+            </div>
+            <div class="product-meta"><small>${p.category}</small><span class="stars">★★★★★</span><h3>${p.name}</h3><span class="price">${usd(p.price)}</span></div>
+          </article>
+        `).join("") || "<p>No products in this collection yet.</p>";
+      }
+
+      function updateCounts() {
+        $("cartCount").textContent = cart.reduce((s,x) => s + x.qty, 0);
+        $("wishCount").textContent = wishlist.length;
+      }
+
+      function renderCart() {
+        $("cartList").innerHTML = cart.length
+          ? cart.map(x => `
+            <div class="cart-line">
+              <img src="${x.image}" alt="">
+              <div><h4>${x.name}</h4><small>${x.size} · ${x.colorName} · Qty ${x.qty}</small><br><small>${usd(x.price * x.qty)}</small><br><button data-remove="${x.key}">Remove</button></div>
+            </div>`).join("")
+          : '<p style="font-size:11px;color:#88777a">Your bag is waiting for something lovely.</p>';
+        $("subtotal").textContent = usd(cart.reduce((s,x) => s + x.price * x.qty, 0));
+        updateCounts();
+        persist();
+      }
+
+      function renderWish() {
+        $("wishList").innerHTML = wishlist.length
+          ? wishlist.map(x => `
+            <div class="cart-line">
+              <img src="${x.images[0]}" alt="">
+              <div><h4>${x.name}</h4><small>${usd(x.price)}</small><br><button data-wish-remove="${x.id}">Remove</button><br><button data-wish-open="${x.id}">View product ↗</button></div>
+            </div>`).join("")
+          : '<p style="font-size:11px;color:#88777a">Your saved looks will appear here.</p>';
+        updateCounts();
+      }
+
+      function toggleWish(id) {
+        const p = products.find(x => x.id === Number(id));
+        if (!p) return;
+        wishlist = wishlist.some(x => x.id === p.id) ? wishlist.filter(x => x.id !== p.id) : [...wishlist, p];
+        persist();
+        renderProducts();
+        renderWish();
+        toast(wishlist.some(x => x.id === p.id) ? "Saved to wishlist" : "Removed from wishlist");
+      }
+
+      // ---------- Detail ----------
+      function openDetail(id) {
+        current = products.find(p => p.id === Number(id));
+        if (!current) return;
+        imageIndex = 0;
+        quantity = 1;
+        chosenSize = "";
+        chosenColor = current.colors[0];
+        $("detailName").textContent = current.name;
+        $("detailPrice").textContent = usd(current.price);
+        $("detailButtonPrice").textContent = usd(current.price);
+        $("detailDesc").textContent = current.description;
+        $("fabricText").textContent = current.fabric;
+        $("qtyValue").textContent = "1";
+        $("selectedSize").textContent = "Choose one";
+        $("sizes").innerHTML = current.sizes.map(s => `<button class="size" data-size="${s}">${s}</button>`).join("");
+        $("colors").innerHTML = current.colors.map((c,i) => `<button class="swatch ${i === 0 ? "selected" : ""}" data-color="${c}" style="background:${c}" aria-label="Color ${i+1}"></button>`).join("");
+        renderGallery();
+        $("detail").classList.add("open");
+        $("overlay").classList.add("open");
+        document.body.classList.add("lock");
+        const video = $("productVideo");
+        video.pause();
+        $("videoSource").src = current.video;
+        $("productVideo").load();
+        $("videoPlaceholder").style.display = "grid";
+        $("productVideo").style.opacity = ".01";
+        $("productVideo").onloadeddata = () => {
+          $("videoPlaceholder").style.display = "none";
+          $("productVideo").style.opacity = "1";
+        };
+      }
+
+      function renderGallery() {
+        // Show up to 6 images in thumbnails
+        $("thumbs").innerHTML = current.images.slice(0,6).map((src,i) =>
+          `<button class="thumb ${i === imageIndex ? "active" : ""}" data-image="${i}"><img src="${src.replace("w=1100","w=240")}" alt="${current.name} view ${i+1}"></button>`
+        ).join("");
+        $("largeImage").src = current.images[imageIndex];
+        $("largeImage").alt = current.name + " gallery image " + (imageIndex+1);
+        $("imageCount").textContent = String(imageIndex+1).padStart(2,"0") + " / " + String(current.images.length).padStart(2,"0");
+      }
+
+      function closeDetail() {
+        $("detail").classList.remove("open");
+        $("overlay").classList.remove("open");
+        document.body.classList.remove("lock");
+        $("productVideo").pause();
+      }
+
+      function addCart(p, size, color, qty) {
+        if (!size) { toast("Please select a size first."); return; }
+        const key = p.id + "-" + size + "-" + color;
+        const found = cart.find(x => x.key === key);
+        if (found) found.qty += qty;
+        else cart.push({ key, id: p.id, name: p.name, price: p.price, image: p.images[0], size, color, colorName: color.toUpperCase(), qty });
+        renderCart();
+        toast("Added to your RAVOSH bag");
+      }
+
+      // ---------- Event Listeners ----------
+      $("products").addEventListener("click", e => {
+        const w = e.target.closest("[data-wish]");
+        if (w) { e.stopPropagation(); toggleWish(w.dataset.wish); return; }
+        const card = e.target.closest("[data-open]");
+        if (card) openDetail(card.dataset.open);
+      });
+
+      $("filters").addEventListener("click", e => {
+        const b = e.target.closest("[data-filter]");
+        if (!b) return;
+        activeFilter = b.dataset.filter;
+        document.querySelectorAll(".filter").forEach(x => x.classList.toggle("active", x === b));
+        renderProducts();
+      });
+
+      $("thumbs").addEventListener("click", e => {
+        const b = e.target.closest("[data-image]");
+        if (b) { imageIndex = Number(b.dataset.image); renderGallery(); }
+      });
+      $("prevImg").onclick = () => { imageIndex = (imageIndex + current.images.length - 1) % current.images.length; renderGallery(); };
+      $("nextImg").onclick = () => { imageIndex = (imageIndex + 1) % current.images.length; renderGallery(); };
+      $("mainImage").onclick = e => { if (e.target.closest("button")) return; $("mainImage").classList.toggle("zoom"); };
+
+      $("sizes").addEventListener("click", e => {
+        const b = e.target.closest("[data-size]");
+        if (!b) return;
+        chosenSize = b.dataset.size;
+        $("selectedSize").textContent = chosenSize;
+        document.querySelectorAll(".size").forEach(x => x.classList.toggle("selected", x === b));
+      });
+      $("colors").addEventListener("click", e => {
+        const b = e.target.closest("[data-color]");
+        if (!b) return;
+        chosenColor = b.dataset.color;
+        document.querySelectorAll(".swatch").forEach(x => x.classList.toggle("selected", x === b));
+      });
+
+      $("qtyMinus").onclick = () => { quantity = Math.max(1, quantity - 1); $("qtyValue").textContent = quantity; };
+      $("qtyPlus").onclick = () => { quantity = Math.min(10, quantity + 1); $("qtyValue").textContent = quantity; };
+
+      $("addDetail").onclick = () => addCart(current, chosenSize, chosenColor, quantity);
+      $("detailHeart").onclick = () => toggleWish(current.id);
+      $("detailBack").onclick = closeDetail;
+      $("overlay").onclick = closeDetail;
+      $("playVideo").onclick = () => {
+        const v = $("productVideo");
+        if (!v.currentSrc || v.readyState === 0) { toast("Product film is unavailable. Add your own product video URL in the admin studio."); return; }
+        v.play().then(() => { $("videoPlaceholder").style.display = "none"; }).catch(() => toast("Tap play on the video to start playback."));
+      };
+
+      $("cartBtn").onclick = () => { $("cartDrawer").classList.add("open"); $("overlay").classList.add("open"); };
+      $("detailCart").onclick = $("cartBtn").onclick;
+      $("cartClose").onclick = () => { $("cartDrawer").classList.remove("open"); $("overlay").classList.remove("open"); };
+      $("cartList").addEventListener("click", e => {
+        const b = e.target.closest("[data-remove]");
+        if (b) { cart = cart.filter(x => x.key !== b.dataset.remove); renderCart(); }
+      });
+
+      $("wishBtn").onclick = () => { $("wishDrawer").classList.add("open"); $("overlay").classList.add("open"); renderWish(); };
+      $("wishClose").onclick = () => { $("wishDrawer").classList.remove("open"); $("overlay").classList.remove("open"); };
+      $("wishList").addEventListener("click", e => {
+        const r = e.target.closest("[data-wish-remove]");
+        if (r) { wishlist = wishlist.filter(x => x.id !== Number(r.dataset.wishRemove)); renderWish(); renderProducts(); }
+        const o = e.target.closest("[data-wish-open]");
+        if (o) { $("wishDrawer").classList.remove("open"); openDetail(o.dataset.wishOpen); }
+      });
+
+      $("checkoutOpen").onclick = () => {
+        if (!cart.length) { toast("Your bag is empty."); return; }
+        $("cartDrawer").classList.remove("open");
+        $("overlay").classList.remove("open");
+        renderCheckout();
+        $("checkout").classList.add("open");
+        document.body.classList.add("lock");
+      };
+
+      function renderCheckout() {
+        const sub = cart.reduce((s,x) => s + x.price * x.qty, 0);
+        const ship = sub >= 150 ? 0 : 9.95;
+        $("checkoutLines").innerHTML = cart.map(x => `<p><span>${x.name} × ${x.qty}</span><strong>${usd(x.price * x.qty)}</strong></p>`).join("");
+        $("shipping").textContent = ship ? usd(ship) : "Complimentary";
+        $("checkoutTotal").textContent = usd(sub + ship);
+      }
+
+      $("checkoutClose").onclick = () => { $("checkout").classList.remove("open"); document.body.classList.remove("lock"); };
+      $("checkoutForm").onsubmit = e => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const order = { orderId: "RAV-" + Date.now(), customer: Object.fromEntries(fd), items: cart, total: $("checkoutTotal").textContent, created: new Date().toISOString() };
+        const orders = JSON.parse(localStorage.getItem("ravoshDemoOrders") || "[]");
+        orders.push(order);
+        localStorage.setItem("ravoshDemoOrders", JSON.stringify(orders));
+        cart = [];
+        renderCart();
+        e.target.reset();
+        $("checkout").classList.remove("open");
+        document.body.classList.remove("lock");
+        toast("Demo order placed: " + order.orderId + " — no payment was processed.");
+      };
+
+      $("searchBtn").onclick = () => {
+        const q = prompt("Search RAVOSH products");
+        if (!q) return;
+        const p = products.find(x => x.name.toLowerCase().includes(q.toLowerCase()) || x.category.toLowerCase().includes(q.toLowerCase()));
+        if (p) openDetail(p.id);
+        else toast("No matching product found.");
+      };
+
+      $("menuBtn").onclick = () => $("nav").classList.toggle("open");
+
+      const handleSubscribe = (e) => {
+        e.preventDefault();
+        const msgId = e.target.id === 'subscribeHome' ? 'subscribeMsgHome' : 'subscribeMsgContact';
+        const msgEl = document.getElementById(msgId);
+        if (msgEl) msgEl.textContent = "Thank you for joining the RAVOSH list. Connect an email platform to receive subscribers.";
+        e.target.reset();
+      };
+      const subHome = document.getElementById('subscribeHome');
+      if (subHome) subHome.addEventListener('submit', handleSubscribe);
+      const subContact = document.getElementById('subscribeContact');
+      if (subContact) subContact.addEventListener('submit', handleSubscribe);
+
+      const runway = [["The evening edit","photo-1539109136881-3be0616acf4b"],["Modern romance","photo-1534528741775-53994a69daeb"],["The editorial look","photo-1529139574466-a303027c1d8b"]];
+      let runIndex = 0;
+      function setRunway() {
+        const r = runway[runIndex];
+        $("runwayModel").src = photo(r[1]);
+        $("runwayLabel").textContent = String(runIndex+1).padStart(2,"0") + " — " + r[0];
+        $("runwayModel").animate([{opacity:.2,transform:"translateY(18px) scale(.97)"},{opacity:1,transform:"translateY(0) scale(1)"}],{duration:650,easing:"ease-out"});
+      }
+      const rNext = document.getElementById('runwayNext');
+      const rPrev = document.getElementById('runwayPrev');
+      if (rNext) rNext.onclick = () => { runIndex = (runIndex + 1) % runway.length; setRunway(); };
+      if (rPrev) rPrev.onclick = () => { runIndex = (runIndex + runway.length - 1) % runway.length; setRunway(); };
+
+      let obs;
+      function initReveal() {
+        if (obs) obs.disconnect();
+        obs = new IntersectionObserver(entries => entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add("show"); obs.unobserve(e.target); }
+        }), { threshold: 0.12 });
+        document.querySelectorAll(".reveal").forEach(x => obs.observe(x));
+      }
+
+      const prodGrid = document.getElementById('products');
+      if (prodGrid) {
+        prodGrid.addEventListener("pointermove", e => {
+          if (!matchMedia("(pointer:fine)").matches) return;
+          const el = e.target.closest(".product-visual");
+          if (!el) return;
+          const r = el.getBoundingClientRect(), x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+          el.style.transform = `perspective(900px) rotateY(${x*7}deg) rotateX(${-y*7}deg)`;
+        });
+        prodGrid.addEventListener("pointerleave", () => prodGrid.querySelectorAll(".product-visual").forEach(x => x.style.transform = ""));
+      }
+
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+          closeDetail();
+          $("cartDrawer").classList.remove("open");
+          $("wishDrawer").classList.remove("open");
+          $("overlay").classList.remove("open");
+          $("checkout").classList.remove("open");
+          $("admin").classList.remove("open");
+          document.body.classList.remove("lock");
+        }
+      });
+
+      $("adminLink").onclick = e => {
+        e.preventDefault();
+        const pass = prompt("Enter demo admin password");
+        if (pass === "ravosh2026") { $("admin").classList.add("open"); renderAdmin(); }
+        else if (pass !== null) toast("Incorrect demo password.");
+      };
+      $("adminClose").onclick = () => $("admin").classList.remove("open");
+
+      function renderAdmin() {
+        $("adminProducts").innerHTML = "<table><tr><th>Product</th><th>Price</th><th>Category</th><th></th></tr>" +
+          products.map(p => `<tr><td>${p.name}</td><td>${usd(p.price)}</td><td>${p.category}</td><td><button data-delete="${p.id}">Delete</button></td></tr>`).join("") + "</table>";
+      }
+
+      $("productForm").onsubmit = e => {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        const id = Math.max(0, ...products.map(p => p.id)) + 1;
+        const urls = (f.get("gallery") || "").split(",").map(x => x.trim()).filter(Boolean);
+        const image = f.get("image");
+        products.push({
+          id, name: f.get("name"), price: Number(f.get("price")), category: f.get("category"), tag: "New arrival", key: "custom",
+          description: f.get("description") || "A new RAVOSH addition.",
+          fabric: "Update product fabric and care details.",
+          images: [image, ...urls].slice(0,6),
+          video: "",
+          sizes: ["XS","S","M","L","XL","XXL"],
+          colors: ["#71364d","#d5b9a8","#262126"]
+        });
+        persist();
+        renderProducts();
+        renderAdmin();
+        e.target.reset();
+        toast("Product added to this browser.");
+      };
+
+      $("adminProducts").addEventListener("click", e => {
+        const b = e.target.closest("[data-delete]");
+        if (b) { products = products.filter(p => p.id !== Number(b.dataset.delete)); persist(); renderAdmin(); renderProducts(); }
+      });
+
+      // ---------- Init ----------
+      renderProducts();
+      renderCart();
+      renderWish();
+      initReveal();
+      setRunway();
+      setTimeout(() => $("intro").classList.add("done"), 1900);
+    })();
+  </script>
+</body>
+</html>
